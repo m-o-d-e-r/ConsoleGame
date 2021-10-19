@@ -7,7 +7,11 @@
 
 int main()
 {
+    MainCycle::Cycle mainCycle;
+
+    mainCycle.RunCycle();
 
 
     return 0;
 }
+// g++ -o main.exe main.cpp Core/MainCore.cpp Bot/bot.cpp Player/player.cpp
