@@ -20,14 +20,50 @@ int main()
         if (playerAction != 'e')
         {
             char botAction = bot.generateAction();
-            printf("%c - %c\n", playerAction, botAction);
-            printf(
-                "Probability ->  %i - %i\n",
-                player.genarateProbability(playerAction),
-                bot.genarateProbability(botAction)
-            );
+            //printf("%c - %c\n", playerAction, botAction);
+            //printf("%i - %i\n",    
+            //    player.genarateProbability(playerAction),
+            //    bot.genarateProbability(botAction)
+            //);
+            switch (playerAction)
+            {
+            case 'a':
+                if (player.genarateProbability(playerAction) == 111)
+                {
+                    if (bot.genarateProbability('f') == 100)
+                    {
+                        player.setHp(-player.getDamage());
+                        printf("Bot: has tend of");
+                    }
 
-//            printf("%i\n", player.genarateProbability(playerAction));
+                    if (botAction == 'd')
+                    {
+                        if (bot.genarateProbability(botAction) == 0)
+                        {
+                            bot.setHp(-player.getDamage());
+                            printf("Player: bang");
+                        }
+                    } else {
+                        if (bot.genarateProbability(botAction) == 111)
+                        {
+                            if (player.genarateProbability('f') == 100)
+                            {
+                                bot.setHp(-bot.getDamage());
+                                printf("Player: has tend of\n");
+                            } else {
+                                player.setHp(-bot.getDamage());
+                                printf("Bot: bang\n");
+                            }
+                        }
+                    }
+                } else {
+                    printf("Player: try to shoot\n");
+                }
+                break;
+            case 'd':
+
+                break;
+            }
         } else {
             printf("Action is wrong\n");
         }

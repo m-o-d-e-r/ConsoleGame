@@ -20,9 +20,13 @@ int Player::genarateProbability(char action)
         if ((rand() % 100) <= this->getPossibility_of_hit())
             return 111;
         break;
-    default:
+    case 'd':
         if ((rand() % 100) <= this->getPossibility_of_protection())
             return 101;
+        break;
+    default:
+        if ((rand() % 100) <= this->getPossibility_to_fend_off())
+            return 100;
         break;
     }
 
