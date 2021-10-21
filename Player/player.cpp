@@ -1,12 +1,30 @@
 #include "player.h"
-/*
-здоров'я - 100
-досвід - від 0 до 100(тільки гравець)
-рівень - від 0 до 20
-урон - 10
-шанс попадання - 50
-шанс захисту - 50
-шанс парирувати - 15
-кількість дуелей(тільки гравець).
-За кожен рівень можна покращити 1 параметр на 2: шанс парирувати, шанс попадання, шанс захисту.
-*/
+#include <iostream>
+
+char Player::getAction()
+{
+    char action;
+    std::cin >> action;
+
+    if ((action == 'a') || (action == 'd'))
+        return action;
+
+    return 'e';
+}
+
+int Player::genarateProbability(char action)
+{
+    switch (action)
+    {
+    case 'a':
+        if ((rand() % 100) <= this->getPossibility_of_hit())
+            return 111;
+        break;
+    default:
+        if ((rand() % 100) <= this->getPossibility_of_protection())
+            return 101;
+        break;
+    }
+
+    return 0;
+}

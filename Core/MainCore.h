@@ -1,11 +1,6 @@
 #include <stdio.h>
 
 
-namespace MainCycle
+namespace Core
 {
-    class Cycle
-    {
-    public:
-        void RunCycle();
-    };
 }
