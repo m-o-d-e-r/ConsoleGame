@@ -27,13 +27,14 @@ int main()
             //);
             switch (playerAction)
             {
-            case 'a':
+            case  'a':
                 if (player.genarateProbability(playerAction) == 111)
                 {
                     if (bot.genarateProbability('f') == 100)
                     {
                         player.setHp(-player.getDamage());
                         printf("Bot: has tend of");
+                        continue;
                     }
 
                     if (botAction == 'd')
@@ -41,7 +42,7 @@ int main()
                         if (bot.genarateProbability(botAction) == 0)
                         {
                             bot.setHp(-player.getDamage());
-                            printf("Player: bang");
+                            printf("Player: bang\n");
                         }
                     } else {
                         if (bot.genarateProbability(botAction) == 111)
@@ -54,6 +55,8 @@ int main()
                                 player.setHp(-bot.getDamage());
                                 printf("Bot: bang\n");
                             }
+                        } else {
+                            printf("Bot: try to shoot\n");
                         }
                     }
                 } else {
@@ -61,7 +64,25 @@ int main()
                 }
                 break;
             case 'd':
-
+                if (botAction == 'a')
+                {
+                    if (bot.genarateProbability(botAction) == 111)
+                    {
+                        if (player.genarateProbability('f') == 100)
+                        {
+                            bot.setHp(-bot.getDamage());
+                            printf("Player: has tend of\n");
+                            continue;
+                        } else {
+                            player.setHp(-bot.getDamage);
+                            printf("Bot: bang\n");
+                        }
+                    } else {
+                        printf("Bot: try to shoot\n");
+                    }
+                } else {
+                    continue;
+                }
                 break;
             }
         } else {
