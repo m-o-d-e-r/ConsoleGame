@@ -36,3 +36,4 @@ int Bot::genarateProbability(char action)
 
     return 0;
 }
+
