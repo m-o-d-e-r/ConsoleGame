@@ -1,7 +1,25 @@
+class Clothes
+{
+    int head = 0, body = 0;
+};
+
+
+class Inventory
+{
+    int currentLeft;  // текущий предмет
+    int currentRight; //
+
+    int leftArm[5];   // все предметы которые можно взять
+    int rightArm[5];  // 
+
+    Clothes clothes; // броня
+};
+
+
 class Player
 {
 private:
-    int hp = 0;
+    int hp = 100;
     int exp = 0;
     int level = 20;
     int damage = 10;
@@ -9,6 +27,8 @@ private:
     int possibility_of_protection = 50;
     int possibility_to_fend_off = 15;
     int count_of_batle;
+
+    Inventory playeriInventory;
 public:
     int getHp() {return this->hp;}
     int getExp() {return this->exp;}
@@ -23,6 +43,7 @@ public:
     int genarateProbability(char action);
 
     void setHp(int r) {this->hp += r;}
+    void n_setHp(int r ) {this->hp = r;}
     void setExp(int exp) {this->exp = exp;}
     void setLevel(int level) {this->level = level;}
     void setDamage(int dng) {this->damage = dng;}
@@ -31,3 +52,7 @@ public:
     void setPossibility_to_fend_off(int value) {this->possibility_to_fend_off = value;}
     void setCount_of_batle(int value) {this->count_of_batle = value;}
 };
+
+
+
+

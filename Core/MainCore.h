@@ -28,10 +28,12 @@ public:
                 caseD(player, bot, playerAction, botAction);
                 break;
             case 's': // сохранение, будет доступно только во время игры
-                // save
+                Save(player, bot);
+                printf("=== Game is saved ===\n");
                 break;
             case 'r': // загрузить игру с .json
                 // не будет доступно во время игры
+                printf("R\n");
                 break;
             }
         } else {
@@ -39,7 +41,9 @@ public:
             }
     }
 
-    void Save ();
+    template <typename _player, typename _bot>
+    void Save (_player &player, _bot &bot);
+
     std::string GetJson ();
 
     template <typename _player, typename _bot, typename _dict>
@@ -150,16 +154,17 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, _dict 
     while (i != 8)
     {
         std::string keyValue = data.substr(0, data.find(","));
-        keyValue = keyValue.substr(1, keyValue.length());
+        keyValue = keyValue.substr(2, keyValue.length());
 
         std::string name = keyValue.substr(0, keyValue.find('"'));
         int value = std::stoi(keyValue.substr(keyValue.find(":") + 1, keyValue.length()));
 
         int id_ = __dict__[name];
+
         switch (id_)
         {
         case 0:
-            player.setHp(value);
+            player.n_setHp(value);
             break;
         case 1:
             player.setExp(value);
@@ -192,4 +197,26 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, _dict 
     }
 }
 
+
+template <typename _player, typename _bot>
+void Core::Save (_player &player, _bot &bot)
+{
+    std::ofstream out;
+    out.open("main.json");
+    if (out.is_open())
+    {
+        out << "{" << std::endl;
+        out << "\t\"hp\":" << player.getHp() << ","  << std::endl;
+        out << "\t\"exp\":0," << std::endl;
+        out << "\t\"level\": 20," << std::endl;
+        out << "\t\"damage\":10," << std::endl;
+        out << "\t\"possibility_of_hit\":50," << std::endl;
+        out << "\t\"possibility_of_protection\":50," << std::endl;
+        out << "\t\"possibility_to_fend_off\":15," << std::endl;
+        out << "\t\"count_of_batle\":0" << std::endl;
+        
+
+        out << "}" << std::endl;
+    }
+}
 

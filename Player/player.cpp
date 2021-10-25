@@ -6,7 +6,7 @@ char Player::getAction()
     char action;
     std::cin >> action;
 
-    if ((action == 'a') || (action == 'd'))
+    if ((action == 'a') || (action == 'd') || (action == 's') || (action == 'r'))
         return action;
 
     return 'e';
