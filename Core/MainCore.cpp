@@ -45,3 +45,10 @@ std::string Core::GetJson (int marker)
     return text;
 }
 
+void Core::ColorPrint (std::string message, int color)
+{
+    SetConsoleTextAttribute(this->hConsole, color);
+    printf("%s\n", message.c_str());
+    SetConsoleTextAttribute(this->hConsole, 7);
+}
+

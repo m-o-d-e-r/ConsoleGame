@@ -4,11 +4,14 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
+#include <Windows.h>
 
 
 class Core
 {
 public:
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
     template <typename _player, typename _bot>
     void caseA (_player &player, _bot &bot, char &playerAction, char &botAction);
     template <typename _player, typename _bot>
@@ -28,8 +31,9 @@ public:
 
     template <typename _player, typename _bot, typename _dict>
     void ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::string &botData, _dict &__dict__);
-};
 
+    void ColorPrint(std::string message, int color);
+};
 
 template <typename _player, typename _bot>
 void Core::MainGameLogic (_player &player, _bot &bot)
@@ -49,15 +53,11 @@ void Core::MainGameLogic (_player &player, _bot &bot)
             break;
         case 's': // сохранение, будет доступно только во время игры
             Save(player, bot);
-            printf("=== Game is saved ===\n");
-            break;
-        case 'r': // загрузить игру с .json
-            // не будет доступно во время игры
-            printf("R\n");
+            printf("=== Game is saved ===", 1);
             break;
         }
     } else {
-            printf("Action is wrong\n");
+            this->ColorPrint("Action is wrong", 4);
         }
 }
 
@@ -66,7 +66,7 @@ int Core::examine(_player &player, _bot &bot)
 {
     if (bot.getHp() <= 0)
     {
-        printf("===================================================\n====================You are won====================\n===================================================\n");
+        this->ColorPrint("===================================================\n====================You are won====================\n===================================================", 2);
         bot.n_setHp(100);
         bot.setLevel(bot.getLevel() + 1);
         bot.setPossibility_of_hit(bot.getPossibility_of_hit() + (0 + rand() % 3));
@@ -84,8 +84,7 @@ int Core::examine(_player &player, _bot &bot)
 
     if (player.getHp() <= 0)
     {
-        printf("====================================================\n====================You are lose====================\n====================================================\n");
-
+        this->ColorPrint("====================================================\n====================You are lose====================\n====================================================", 4);
         return 1;
     }
     return -1;
@@ -96,60 +95,60 @@ void Core::caseA(_player &player, _bot &bot, char &playerAction, char &botAction
 {
     if (player.genarateProbability(playerAction) == 111)
     {
-        printf("Player: is shooting\n");
+        this->ColorPrint("Player: is shooting", 3);
         if (bot.genarateProbability('f') == 100)
         {
             player.setHp(-player.getDamage());
-            printf("Bot: has tend of\n");
+            this->ColorPrint("Bot: has tend of", 3);
         } else {
             if (botAction == 'd')
             {
-                printf("Bot: took the shield\n");
+                this->ColorPrint("Bot: took the shield", 3);
                 if (bot.genarateProbability(botAction) == 0)
                 {
                     bot.setHp(-player.getDamage());
-                    printf("Bot: shield does not work\n");
-                    printf("Player: bang\n");
+                    this->ColorPrint("Bot: shield does not work", 3);
+                    this->ColorPrint("Player: bang", 3);
                 } else {
-                    printf("Bot: shield worked\n");
+                    this->ColorPrint("Bot: shield worked", 3);
                 }
             } else {
-                printf("Player: bang\n");
-                printf("Bot: is shooting\n");
+                this->ColorPrint("Player: bang", 3);
+                this->ColorPrint("Bot: is shooting", 3);
                 if (bot.genarateProbability(botAction) == 111)
                 {
                     if (player.genarateProbability('f') == 100)
                     {
                         bot.setHp(-bot.getDamage());
-                        printf("Player: has tend of\n");
+                        this->ColorPrint("Player: has tend of", 3);
                     } else {
                         player.setHp(-bot.getDamage());
-                        printf("Bot: bang\n");
+                        this->ColorPrint("Bot: bang", 3);
                     }
                 } else {
-                    printf("Bot: tried to shoot\n");
+                    this->ColorPrint("Bot: tried to shoot", 3);
                 }
             }
         }
     } else {
-        printf("Player: tried to shoot\n");
+        this->ColorPrint("Player: tried to shoot", 3);
         if (botAction == 'd')
         {
-            printf("Bot: took the shield\n");
+            this->ColorPrint("Bot: took the shield", 3);
         } else {
             if (bot.genarateProbability(botAction) == 111)
             {
-                printf("Bot: is shooting\n");
+                this->ColorPrint("Bot: is shooting", 3);
                 if (player.genarateProbability('f') == 100)
                 {
                     bot.setHp(-bot.getDamage());
-                    printf("Player: has tend of\n");
+                    this->ColorPrint("Player: has tend of", 3);
                 } else {
                     player.setHp(-bot.getDamage());
-                    printf("Bot: bang\n");
+                    this->ColorPrint("Bot: bang", 3);
                 }
             } else {
-                printf("Bot: tried to shoot\n");
+                this->ColorPrint("Bot: tried to shoot", 3);
             }
         }
 
@@ -159,31 +158,31 @@ void Core::caseA(_player &player, _bot &bot, char &playerAction, char &botAction
 template <typename _player, typename _bot>
 void Core::caseD(_player &player, _bot &bot, char &playerAction, char &botAction)
 {
-    printf("Player: took the shield\n");
+    this->ColorPrint("Player: took the shield", 3);
     if (botAction == 'a')
     {
         if (bot.genarateProbability(botAction) == 111)
         {
-            printf("Bot: is shooting\n");
+            this->ColorPrint("Bot: is shooting", 3);
             if (player.genarateProbability('f') == 100)
             {
                 bot.setHp(-bot.getDamage());
-                printf("Player: has tend of\n");
+                this->ColorPrint("Player: has tend of", 3);
             } else {
                 if (player.genarateProbability(botAction) == 101)
                 {
-                    printf("Player: shield worked\n");
+                    this->ColorPrint("Player: shield worked", 3);
                 } else {
-                    printf("Player: shield does not work\n");
+                    this->ColorPrint("Player: shield does not work", 3);
                     player.setHp(-bot.getDamage());
-                    printf("Bot: bang\n");
+                    this->ColorPrint("Bot: bang", 3);
                 }
             }
         } else {
-            printf("Bot: try to shoot\n");
+            this->ColorPrint("Bot: try to shoot", 3);
         }
     } else {
-        printf("Bot: took the shield\n");
+        this->ColorPrint("Bot: took the shield", 3);
     }
 }
 
@@ -274,7 +273,6 @@ void Core::Save (_player &player, _bot &bot)
     out.open("player.json");
     if (out.is_open())
     {
-        printf("%i\n", player.getPossibility_of_protection());
         out << "{" << std::endl;
         out << "\t\"hp\": " << player.getHp() << ","  << std::endl;
         out << "\t\"exp\": " << player.getExp() << "," << std::endl;

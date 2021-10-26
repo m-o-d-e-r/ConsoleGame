@@ -9,6 +9,9 @@
 #include "settings/settings.hpp"
 
 
+
+
+
 int main()
 {
     Core core;
@@ -18,9 +21,11 @@ int main()
     core.examine(player, bot);
 
     char userInput;
-    printf("Choose what do you want\n\tc - continue\n\tn - new game\n");
+    core.ColorPrint(
+        "Choose what do you want\n\tc - continue\n\tn - new game",
+        1
+    );
     scanf("%c", &userInput);
-
 
     if (userInput == 'c')
     {

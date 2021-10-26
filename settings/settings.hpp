@@ -60,3 +60,11 @@ namespace PlayerItems {
         };
     }
 }
+
+
+enum class Colors {
+    BLUE = 1,
+    GREEN = 2,
+    CYAN = 3,
+    RED = 4
+};
