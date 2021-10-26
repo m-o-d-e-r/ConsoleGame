@@ -1,0 +1,8 @@
+{
+	"hp": 100,
+	"level": 1,
+	"damage": 10,
+	"possibility_of_hit": 50,
+	"possibility_of_protection": 50,
+	"possibility_to_fend_off": 15
+}

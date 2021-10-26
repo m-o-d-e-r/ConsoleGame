@@ -15,6 +15,8 @@ int main()
     Player player;
     Bot bot;
 
+    core.examine(player, bot);
+
     char userInput;
     printf("Choose what do you want\n\tc - continue\n\tn - new game\n");
     scanf("%c", &userInput);
@@ -23,15 +25,17 @@ int main()
     if (userInput == 'c')
     {
         std::string data = core.GetJson();
+        std::string botData = core.GetJson(1);
 
-        core.ParseAndSetAttr(player, bot, data, Settings::__dict__);
+        core.ParseAndSetAttr(player, bot, data, botData, Settings::__dict__);
     } // если n, то атрибуты будут по молчанию
-
-    printf("-%i-\n", player.getHp());
 
     while (Settings::RunGame)
     {
         core.MainGameLogic(player, bot);
+
+        if ((core.examine(player, bot) == 0) || (core.examine(player, bot) == 0))
+            break;
     }
 
 
