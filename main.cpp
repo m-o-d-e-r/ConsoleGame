@@ -18,13 +18,12 @@ int main()
     Player player;
     Bot bot;
 
+    PlayerItems::ItemData iData;
+
     core.examine(player, bot);
 
     char userInput;
-    core.ColorPrint(
-        "Choose what do you want\n\tc - continue\n\tn - new game",
-        1
-    );
+    core.ColorPrint("Choose what do you want\n\tc - continue\n\tn - new game", 1);
     scanf("%c", &userInput);
 
     if (userInput == 'c')
@@ -35,9 +34,10 @@ int main()
         core.ParseAndSetAttr(player, bot, data, botData, Settings::__dict__);
     } // если n, то атрибуты будут по молчанию
 
+
     while (Settings::RunGame)
     {
-        core.MainGameLogic(player, bot);
+        core.MainGameLogic(player, bot, iData);
 
         if ((core.examine(player, bot) == 0) || (core.examine(player, bot) == 0))
             break;

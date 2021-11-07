@@ -1,18 +1,76 @@
+#include <map>
+#include <string>
+
+namespace PlayerItems {
+    // [0] - индекс вещей
+    // [1] - урон(защита)
+
+    struct ItemData {
+        std::map <int, int> THINGS_FOR_ARMS_ATTACK    = {
+            {0, 2}, {1, 3}, {2, 7}, {3, 15}
+        };
+        std::map <int, int> THINGS_FOR_ARMS_DEFENCE   = {
+            {0, 5}, {1, 10}, {2, 15}
+        };
+
+        std::map <int, std::string> NAME_OF_THINGS_FOR_ATTACK = {
+            {0, "Sword"},
+            {1, "Geralt's sword"},
+            {2, "Predator's sword"},
+            {3, "Keeper's staff"},
+            {10, "..."}
+        };
+    };
+    
+    enum class THINGS_FOR_ARMS_ATTACK_CLASS {
+        SWORD,            // 2
+        GERALT_S_SWORD,   // 3
+        PREDATOR_S_SWORD, // 7
+        KEEPER_S_STAFF,   // 15
+    };
+
+    enum class THINGS_FOR_ARMS_DEFENCE_CLASS {
+        SHIELD,          // 5
+        ARTHUR_S_SHIELD, // 10
+        SHIELD_OF_GOLEM  // 15
+    };
+
+
+    namespace Clothes // будет среднее значение
+    {
+        enum class Head {
+            HELMET,
+            HELMET_OF_ARTUR,
+            ELF_S_HELMET
+        };
+
+        enum class Body {
+            ARMOR_1,
+            ARMOR_2,
+            ARMOR_3
+        };
+    }
+}
+
+
+
 class Clothes
 {
+public:
     int head = 0, body = 0;
 };
 
 
 class Inventory
 {
+public:
     int currentLeft;  // текущий предмет
     int currentRight; //
 
-    int leftArm[5];   // все предметы которые можно взять
-    int rightArm[5];  // 
+    int leftArm[5]  = {0, 1, 2, 3, 10};   // все предметы которые можно взять
+    int rightArm[5] = {0, 1, 2, 3, 10};  // 
 
-    Clothes clothes; // броня
+    Clothes clothes;  // броня
 };
 
 
@@ -38,6 +96,8 @@ public:
     int getPossibility_of_protection() {return this->possibility_of_protection;}
     int getPossibility_to_fend_off() {return this->possibility_to_fend_off;}
     int getCount_of_batle() {return this->count_of_batle;}
+
+    Inventory getPlayeriInventory() {return this->playeriInventory;}
 
     char getAction();
     int genarateProbability(char action);

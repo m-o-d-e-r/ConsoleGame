@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iomanip>
+#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
@@ -17,14 +19,17 @@ public:
     template <typename _player, typename _bot>
     void caseD (_player &player, _bot &bot, char &playerAction, char &botAction);
 
-    template <typename _player, typename _bot>
-    void MainGameLogic (_player &player, _bot &bot);
+    template <typename _player, typename _bot, typename _i_data>
+    void MainGameLogic (_player &player, _bot &bot, _i_data &iData);
 
     template <typename _player, typename _bot>
     int examine(_player &player, _bot &bot);
 
     template <typename _player, typename _bot>
     void Save (_player &player, _bot &bot);
+
+    template <typename _player, typename _i_data>
+    void openInventory (_player &player, _i_data &iData);
 
     std::string GetJson ();
     std::string GetJson (int marker);
@@ -35,8 +40,8 @@ public:
     void ColorPrint(std::string message, int color);
 };
 
-template <typename _player, typename _bot>
-void Core::MainGameLogic (_player &player, _bot &bot)
+template <typename _player, typename _bot, typename _i_data>
+void Core::MainGameLogic (_player &player, _bot &bot, _i_data &iData)
 {
     char playerAction = player.getAction();
 
@@ -46,14 +51,17 @@ void Core::MainGameLogic (_player &player, _bot &bot)
         switch (playerAction)
         {
         case 'a':
-            caseA(player, bot, playerAction, botAction);
+            this->caseA(player, bot, playerAction, botAction);
             break;
         case 'd':
-            caseD(player, bot, playerAction, botAction);
+            this->caseD(player, bot, playerAction, botAction);
             break;
-        case 's': // сохранение, будет доступно только во время игры
-            Save(player, bot);
-            printf("=== Game is saved ===", 1);
+        case 's':
+            this->Save(player, bot);
+            this->ColorPrint("=== Game is saved ===", 2);
+            break;
+        case 'i':
+            this->openInventory(player, iData);
             break;
         }
     } else {
@@ -186,6 +194,35 @@ void Core::caseD(_player &player, _bot &bot, char &playerAction, char &botAction
     }
 }
 
+template <typename _player, typename _i_data>
+void Core::openInventory (_player &player, _i_data &iData)
+{
+    this->ColorPrint("=============================\n==========Inventory==========\n=============================\n", 2);
+    SetConsoleTextAttribute(this->hConsole, 2);
+
+    std::cout.width(15);
+    std::cout.fill(' ');    
+    std::cout << "Left arm";
+
+    std::cout.width(15);
+    std::cout.fill(' ');
+    std::cout << "Right arm" << std::endl << std::endl;;
+    for (int i = 0; i < 5; i++)
+    {
+        std::cout.width(10);
+        std::cout.fill(' ');
+
+        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().leftArm[i]].c_str();
+
+        std::cout.width(20);
+        std::cout.fill(' ');
+
+        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().rightArm[i]].c_str() << std::endl;
+    }
+
+    SetConsoleTextAttribute(this->hConsole, 7);
+}
+
 template <typename _player, typename _bot, typename _dict>
 void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::string &botData, _dict &__dict__)
 {
@@ -263,6 +300,7 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         botData = botData.substr(botData.find(",") + 1, botData.length());
         i++;
     }
+    this->ColorPrint("Data read successfully...", 1);
 } // конец магии парсера
 
 template <typename _player, typename _bot>
