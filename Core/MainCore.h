@@ -34,6 +34,8 @@ public:
     std::string GetJson ();
     std::string GetJson (int marker);
 
+    std::string openList();
+
     template <typename _player, typename _bot, typename _dict>
     void ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::string &botData, _dict &__dict__);
 
@@ -78,7 +80,7 @@ int Core::examine(_player &player, _bot &bot)
         bot.n_setHp(100);
         bot.setLevel(bot.getLevel() + 1);
         bot.setPossibility_of_hit(bot.getPossibility_of_hit() + (0 + rand() % 3));
-        bot.setPossibility_of_protection(bot.getPossibility_of_protection() + (0 + rand() % 3));
+        bot.setPossibility_of_protection(bot.getPossibility_of_protection() + (0 +rand() % 3));
         bot.setPossibility_to_fend_off(bot.getPossibility_to_fend_off() + (0 + rand() % 3));
 
         player.n_setHp(100);
@@ -336,5 +338,21 @@ void Core::Save (_player &player, _bot &bot)
         out_ << "\t\"possibility_to_fend_off\": " << bot.getPossibility_to_fend_off() << std::endl;
         out_ << "}" << std::endl;
     }
-}
 
+    std::ofstream out_l; // нужно переделать
+    out_l.open("player_temp.txt");
+    if (out_l.is_open())
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            out_l << player.getPlayeriInventory().leftArm[i] << " ";
+        }
+
+        out_l << "\n";
+
+        for (int i = 0; i < 5; i++)
+        {
+            out_l << player.getPlayeriInventory().rightArm[i] << " ";
+        }
+    }
+}

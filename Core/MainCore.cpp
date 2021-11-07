@@ -52,3 +52,20 @@ void Core::ColorPrint (std::string message, int color)
     SetConsoleTextAttribute(this->hConsole, 7);
 }
 
+std::string Core::openList()
+{
+    std::fstream OpenJsonFile("player_temp.txt");
+
+    std::string t = "";
+    std::string text = "";
+
+    while (!OpenJsonFile.eof())
+    {
+        getline(OpenJsonFile, t);
+        text += t;
+        text += "|";
+    }
+
+    return text;
+}
+

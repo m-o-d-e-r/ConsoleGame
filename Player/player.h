@@ -67,8 +67,8 @@ public:
     int currentLeft;  // текущий предмет
     int currentRight; //
 
-    int leftArm[5]  = {0, 1, 2, 3, 10};   // все предметы которые можно взять
-    int rightArm[5] = {0, 1, 2, 3, 10};  // 
+    int leftArm[5]  = {10, 10, 10, 10, 10};   // все предметы которые можно взять
+    int rightArm[5] = {10, 10, 10, 10, 10};  // 
 
     Clothes clothes;  // броня
 };
@@ -86,8 +86,13 @@ private:
     int possibility_to_fend_off = 15;
     int count_of_batle;
 
+    int newThing = 90;
+
     Inventory playeriInventory;
 public:
+    int *leftArm_link  = &playeriInventory.leftArm[0];
+    int *rightArm_link = &playeriInventory.leftArm[0];
+
     int getHp() {return this->hp;}
     int getExp() {return this->exp;}
     int getLevel() {return this->level;}
@@ -96,6 +101,8 @@ public:
     int getPossibility_of_protection() {return this->possibility_of_protection;}
     int getPossibility_to_fend_off() {return this->possibility_to_fend_off;}
     int getCount_of_batle() {return this->count_of_batle;}
+
+    int getNewThing() {return this-> newThing;}
 
     Inventory getPlayeriInventory() {return this->playeriInventory;}
 
@@ -111,6 +118,8 @@ public:
     void setPossibility_of_protection(int value) {this->possibility_of_protection = value;}
     void setPossibility_to_fend_off(int value) {this->possibility_to_fend_off = value;}
     void setCount_of_batle(int value) {this->count_of_batle = value;}
+
+    void setNewThing(int nt) {this-> newThing = nt;}
 };
 
 
