@@ -64,8 +64,8 @@ public:
 class Inventory
 {
 public:
-    int currentLeft;  // текущий предмет
-    int currentRight; //
+    int currentLeft  = 10;  // текущий предмет
+    int currentRight = 10; //
 
     int leftArm[5]  = {10, 10, 10, 10, 10};   // все предметы которые можно взять
     int rightArm[5] = {10, 10, 10, 10, 10};  // 
@@ -92,6 +92,8 @@ private:
 public:
     int *leftArm_link  = &playeriInventory.leftArm[0];
     int *rightArm_link = &playeriInventory.leftArm[0];
+    int *curLeftArm_link  = &playeriInventory.currentLeft;
+    int *curRightArm_link = &playeriInventory.currentRight;
 
     int getHp() {return this->hp;}
     int getExp() {return this->exp;}

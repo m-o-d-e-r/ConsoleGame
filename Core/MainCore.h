@@ -40,6 +40,9 @@ public:
     void ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::string &botData, _dict &__dict__);
 
     void ColorPrint(std::string message, int color);
+
+    template <typename _player>
+    void ParseList(_player &player, std::string &data);
 };
 
 template <typename _player, typename _bot, typename _i_data>
@@ -202,24 +205,24 @@ void Core::openInventory (_player &player, _i_data &iData)
     this->ColorPrint("=============================\n==========Inventory==========\n=============================\n", 2);
     SetConsoleTextAttribute(this->hConsole, 2);
 
-    std::cout.width(15);
-    std::cout.fill(' ');    
-    std::cout << "Left arm";
-
-    std::cout.width(15);
+    std::cout.width(20);
     std::cout.fill(' ');
-    std::cout << "Right arm" << std::endl << std::endl;;
+    std::cout << "In the left hand " << "( " << iData.NAME_OF_THINGS_FOR_ATTACK[*player.curLeftArm_link] << " )";
+
+    std::cout.width(20);
+    std::cout.fill(' ');
+    std::cout << "In the right hand" << "( " << iData.NAME_OF_THINGS_FOR_ATTACK[*player.curRightArm_link] << " )" << std::endl << std::endl;
     for (int i = 0; i < 5; i++)
     {
         std::cout.width(10);
         std::cout.fill(' ');
 
-        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().leftArm[i]].c_str();
+        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().leftArm[i]].c_str() << " (+" << iData.THINGS_FOR_ARMS_ATTACK[player.getPlayeriInventory().leftArm[i]] << ")";
 
         std::cout.width(20);
         std::cout.fill(' ');
 
-        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().rightArm[i]].c_str() << std::endl;
+        std::cout << iData.NAME_OF_THINGS_FOR_ATTACK[player.getPlayeriInventory().rightArm[i]].c_str() << " (+" << iData.THINGS_FOR_ARMS_ATTACK[player.getPlayeriInventory().rightArm[i]] << ")" << std::endl;
     }
 
     SetConsoleTextAttribute(this->hConsole, 7);
@@ -354,5 +357,24 @@ void Core::Save (_player &player, _bot &bot)
         {
             out_l << player.getPlayeriInventory().rightArm[i] << " ";
         }
+    }
+}
+
+template <typename _player>
+void Core::ParseList(_player &player, std::string &data)
+{
+    for (int i = 0; i < 10; i++)
+    {
+        std::string id_ = data.substr(0, data.find(" "));
+
+        if (i <= 4)
+        {
+            *(player.leftArm_link + i) = std::stoi(id_);
+        } else
+        {
+            *(player.rightArm_link + i) = std::stoi(id_);
+        }
+
+        data = data.substr(data.find(" ") + 1, data.length());
     }
 }

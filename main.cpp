@@ -21,6 +21,8 @@ int main()
     Bot bot;
 
     std::cout << core.openList() << std::endl;
+    std::string str_lst = core.openList();
+    core.ParseList(player, str_lst);
 
     PlayerItems::ItemData iData;
 
@@ -49,7 +51,7 @@ int main()
 
     while (Settings::RunGame)
     {
-        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game", 1);
+        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\ngl - get thing into left hand; gr - get thing into right hand;", 1);
         core.MainGameLogic(player, bot, iData);
 
         if ((core.examine(player, bot) == 0))

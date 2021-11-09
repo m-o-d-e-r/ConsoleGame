@@ -63,7 +63,6 @@ std::string Core::openList()
     {
         getline(OpenJsonFile, t);
         text += t;
-        text += "|";
     }
 
     return text;
