@@ -68,10 +68,16 @@ void Core::MainGameLogic (_player &player, _bot &bot, _i_data &iData)
         case 'i':
             this->openInventory(player, iData);
             break;
+        case 'l':
+            player.setLeft();
+            break;
+        case 'r':
+            player.setRight();
+            break;
         }
     } else {
-            this->ColorPrint("Action is wrong", 4);
-        }
+        this->ColorPrint("Action is wrong", 4);
+    }
 }
 
 template <typename _player, typename _bot>

@@ -1,10 +1,10 @@
 {
 	"hp": 100,
-	"exp": 59,
-	"level": 14,
+	"exp": 75,
+	"level": 17,
 	"damage": 10,
 	"possibility_of_hit": 50,
 	"possibility_of_protection": 15,
 	"possibility_to_fend_off": 15,
-	"count_of_batle": 13
+	"count_of_batle": 16
 }

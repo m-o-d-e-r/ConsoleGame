@@ -104,7 +104,7 @@ public:
     int getPossibility_to_fend_off() {return this->possibility_to_fend_off;}
     int getCount_of_batle() {return this->count_of_batle;}
 
-    int getNewThing() {return this-> newThing;}
+    int getNewThing() {return this->newThing;}
 
     Inventory getPlayeriInventory() {return this->playeriInventory;}
 
@@ -122,8 +122,7 @@ public:
     void setCount_of_batle(int value) {this->count_of_batle = value;}
 
     void setNewThing(int nt) {this-> newThing = nt;}
+
+    void setLeft();
+    void setRight();
 };
-
-
-
-

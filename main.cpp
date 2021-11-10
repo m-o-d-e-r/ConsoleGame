@@ -20,10 +20,6 @@ int main()
     Player player;
     Bot bot;
 
-    std::cout << core.openList() << std::endl;
-    std::string str_lst = core.openList();
-    core.ParseList(player, str_lst);
-
     PlayerItems::ItemData iData;
 
     while (true)
@@ -40,6 +36,9 @@ int main()
             std::string botData = core.GetJson(1);
 
             core.ParseAndSetAttr(player, bot, data, botData, Settings::__dict__);
+            std::string str_lst = core.openList();
+            core.ParseList(player, str_lst);
+
             break;
         } else if (userInput == 'n')
         {
@@ -51,7 +50,7 @@ int main()
 
     while (Settings::RunGame)
     {
-        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\ngl - get thing into left hand; gr - get thing into right hand;", 1);
+        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\nl - get thing into left hand; r - get thing into right hand;", 1);
         core.MainGameLogic(player, bot, iData);
 
         if ((core.examine(player, bot) == 0))
@@ -93,4 +92,4 @@ int main()
 
     return 0;
 }
-//g++ -o main.exe main.cpp Core/MainCore.cpp Bot/bot.cpp Player/player.cpp
+//g++ -g -o main.exe main.cpp Core/MainCore.cpp Bot/bot.cpp Player/player.cpp
