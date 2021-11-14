@@ -20,6 +20,8 @@ int main()
     Player player;
     Bot bot;
 
+    bool first = true;
+
     PlayerItems::ItemData iData;
 
     while (true)
@@ -51,6 +53,13 @@ int main()
     while (Settings::RunGame)
     {
         core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\nl - get thing into left hand; r - get thing into right hand;", 1);
+
+        if (first)
+        {
+            first = false;
+        } else {
+            std::getchar();
+        }
         core.MainGameLogic(player, bot, iData);
 
         if ((core.examine(player, bot) == 0))

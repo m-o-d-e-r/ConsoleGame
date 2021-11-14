@@ -4,9 +4,7 @@
 char Player::getAction()
 {
     char action;
-    std::getchar();
-    std::cin >> action;
-
+    scanf("\n%c", &action);
     if ((action == 'a') || (action == 'd') || (action == 's') || (action == 'r') || (action == 'i') || (action == 'l') || (action == 'r'))
         return action;
 
@@ -35,38 +33,47 @@ int Player::genarateProbability(char action)
 }
 
 void Player::setLeft()
-{
+{/*
     int num;
 
-    std::getchar();
     std::cin >> num;
+
+
     if ((num == 0) || (num == 1) || (num == 2) || (num == 3) || (num == 4))
     {
         if (*(this->leftArm_link + num) != 10)
         {
-            *(this->curLeftArm_link) = num;
-            this->setDamage(this->getDamage + *(this->curLeftArm_link));
+            *(this->curLeftArm_link) = this->leftArm_link[num];
+            this->setDamage(this->getDamage() + *(this->curLeftArm_link));
+        } else {
+            std::cout << "Inventory is empty..." << std::endl;
+        }
+    } else if (num == 'q')
+    {
+        std::cout << "Wrong input..." << std::endl;
+    } else {
+        std::cout << "Wrong input..." << std::endl;
+    }/*
+}
+
+void Player::setRight()
+{
+    /*
+    int num;
+
+    std::getchar();
+    std::cin >> num;
+
+    if ((num == 0) || (num == 1) || (num == 2) || (num == 3) || (num == 4))
+    {
+        if (*(this->rightArm_link + num) != 10)
+        {
+            *(this->curRightArm_link) = this->rightArm_link[num];
+            this->setDamage(this->getDamage() + *(this->curRightArm_link));
         } else {
             std::cout << "Inventory is empty..." << std::endl;
         }
     } else {
         std::cout << "Wrong input..." << std::endl;
-    }
-}
-
-void Player::setRight()
-{
-    int num;
-
-    while (true)
-    {
-        std::cin >> num;
-        if ((num == 0) || (num == 1) || (num == 2) || (num == 3) || (num == 4))
-        {
-            *(this->curRightArm_link) = num;
-            break;
-        } else {
-            std::cout << "Wrong input..." << std::endl;
-        }
-    }
+    }*/
 }
