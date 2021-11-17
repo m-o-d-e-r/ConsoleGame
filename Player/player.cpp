@@ -33,7 +33,7 @@ int Player::genarateProbability(char action)
 }
 
 void Player::setLeft()
-{/*
+{
     int num;
 
     std::cin >> num;
@@ -53,12 +53,12 @@ void Player::setLeft()
         std::cout << "Wrong input..." << std::endl;
     } else {
         std::cout << "Wrong input..." << std::endl;
-    }/*
+    }
 }
 
 void Player::setRight()
 {
-    /*
+    
     int num;
 
     std::getchar();
@@ -75,5 +75,5 @@ void Player::setRight()
         }
     } else {
         std::cout << "Wrong input..." << std::endl;
-    }*/
+    }
 }
