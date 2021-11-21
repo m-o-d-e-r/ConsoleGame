@@ -8,6 +8,16 @@ private:
     int possibility_of_protection = 50;
     int possibility_to_fend_off = 15;
 public:
+    void Reset ()
+    {
+        this->hp = 100;
+        this->level = 1;
+        this->damage = 10;
+        this->possibility_of_hit = 50;
+        this->possibility_of_protection = 50;
+        this->possibility_to_fend_off = 15;
+    }
+
     char generateAction();
     int getHp() {return this->hp;}
     void setHp(int r) {this->hp += r;}

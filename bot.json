@@ -1,8 +1,8 @@
 {
 	"hp": 100,
-	"level": 17,
+	"level": 1,
 	"damage": 10,
-	"possibility_of_hit": 13,
-	"possibility_of_protection": 13,
-	"possibility_to_fend_off": 13
+	"possibility_of_hit": 50,
+	"possibility_of_protection": 50,
+	"possibility_to_fend_off": 15
 }

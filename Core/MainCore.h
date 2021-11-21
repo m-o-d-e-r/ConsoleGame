@@ -43,6 +43,9 @@ public:
 
     template <typename _player>
     void ParseList(_player &player, std::string &data);
+
+    template <typename _player, typename _bot>
+    void returnInfo (_player player, _bot bot);
 };
 
 template <typename _player, typename _bot, typename _i_data>
@@ -73,6 +76,9 @@ void Core::MainGameLogic (_player &player, _bot &bot, _i_data &iData)
             break;
         case 'r':
             player.setRight();
+            break;
+        case 'f':
+            this->returnInfo(player, bot);
             break;
         }
     } else {
@@ -237,6 +243,8 @@ void Core::openInventory (_player &player, _i_data &iData)
 template <typename _player, typename _bot, typename _dict>
 void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::string &botData, _dict &__dict__)
 {
+    int is_error__ = 0;
+
     int i = 0;
     while (i != 8)
     {
@@ -260,7 +268,14 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         switch (id_)
         {
         case 0:
-            player.n_setHp(value);
+            if (value <= 0)
+            {
+                this->ColorPrint("Warning: HP is less than 0", 4);
+                is_error__ = 1;
+                goto error;
+            } else {
+                player.n_setHp(value);
+            }
             break;
         case 1:
             player.setExp(value);
@@ -289,7 +304,6 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         {
         case 0:
             bot.n_setHp(botValue);
-            break;
         case 2:
             bot.setLevel(botValue);
             break;
@@ -311,6 +325,15 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         botData = botData.substr(botData.find(",") + 1, botData.length());
         i++;
     }
+
+    error:
+    if (is_error__ != 0)
+    {
+        this->ColorPrint("New game", 2);
+        player.Reset();
+        bot.Reset();
+    }
+
     this->ColorPrint("Data read successfully...", 1);
 } // конец магии парсера
 
@@ -383,4 +406,16 @@ void Core::ParseList(_player &player, std::string &data)
 
         data = data.substr(data.find(" ") + 1, data.length());
     }
+}
+
+template <typename _player, typename _bot>
+void Core::returnInfo (_player player, _bot bot)
+{
+    this->ColorPrint("===Player===", 2);
+    this->ColorPrint("\tXP: " + std::to_string(player.getHp()), 2);
+    this->ColorPrint("\tDamage: " + std::to_string(player.getDamage()), 2);
+    this->ColorPrint("===Bot===", 2);
+    this->ColorPrint("\tXP: " + std::to_string(bot.getHp()), 2);
+    this->ColorPrint("\tDamage: " + std::to_string(bot.getDamage()), 2);
+    this->ColorPrint("\tLevel: " + std::to_string(bot.getLevel()), 2);
 }

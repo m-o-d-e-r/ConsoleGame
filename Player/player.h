@@ -90,10 +90,26 @@ private:
 
     Inventory playeriInventory;
 public:
+    void Reset()
+    {
+        this->hp = 100;
+        this->exp = 0;
+        this->level = 1;
+        this->damage = 10;
+        this->possibility_of_hit = 50;
+        this->possibility_of_protection = 50;
+        this->possibility_to_fend_off = 15;
+        this->count_of_batle;
+
+        this->newThing = 90;
+    }
+
     int *leftArm_link  = &playeriInventory.leftArm[0];
     int *rightArm_link = &playeriInventory.leftArm[0];
     int *curLeftArm_link  = &playeriInventory.currentLeft;
     int *curRightArm_link = &playeriInventory.currentRight;
+
+    PlayerItems::ItemData iData;
 
     int getHp() {return this->hp;}
     int getExp() {return this->exp;}
