@@ -304,6 +304,7 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         {
         case 0:
             bot.n_setHp(botValue);
+            break;
         case 2:
             bot.setLevel(botValue);
             break;
