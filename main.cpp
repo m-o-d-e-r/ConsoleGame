@@ -15,8 +15,10 @@
 int main()
 {
     srand(time(NULL));
+    Colors colors;
+    const int *colors_ptr = &colors.BLUE;
 
-    Core core;
+    Core core(colors_ptr);
     Player player;
     Bot bot;
 
@@ -27,7 +29,7 @@ int main()
     while (true)
     {
         char userInput;
-        core.ColorPrint("Choose what do you want\n\tc - continue\n\tn - new game", 1);
+        core.ColorPrint("Choose what do you want\n\tc - continue\n\tn - new game", colors.BLUE);
         scanf("\n%c", &userInput);
 
         system("cls");
@@ -46,13 +48,13 @@ int main()
         {
             break;
         } else {
-            core.ColorPrint("Incorrect choice...", 4);
+            core.ColorPrint("Incorrect choice...", colors.RED);
         }
     }
 
     while (Settings::RunGame)
     {
-        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\nl - get thing into left hand; r - get thing into right hand;\nf - info about state of player and bot", 1);
+        core.ColorPrint("a - atack; d - deffence; i - inventory; s - save game;\nl - get thing into left hand; r - get thing into right hand;\nf - info about state of player and bot", colors.BLUE);
 
         if (first)
         {
@@ -84,7 +86,7 @@ int main()
                     }
                     if (i == 4)
                     {
-                        core.ColorPrint("Inventary is full...", 4);
+                        core.ColorPrint("Inventary is full...", colors.RED);
                     }
                 }
                 core.openInventory(player, iData);

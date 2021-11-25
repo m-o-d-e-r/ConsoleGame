@@ -20,9 +20,10 @@ namespace Settings {
     };
 }
 
-enum class Colors {
-    BLUE = 1,
-    GREEN = 2,
-    CYAN = 3,
-    RED = 4
+class Colors {
+public:
+    const int BLUE    = 1;
+    const int GREEN   = 2;
+    const int CYAN    = 3;
+    const int RED     = 4;
 };

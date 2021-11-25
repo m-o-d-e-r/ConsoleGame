@@ -7,11 +7,27 @@
 #include <string>
 #include <fstream>
 #include <Windows.h>
+#include <map>
 
 
 class Core
 {
 public:
+    std::map <std::string, int> CoreColors = {
+        {"BLUE",  1},
+        {"GREEN", 2},
+        {"CYAN",  3},
+        {"RED",   4}
+    };
+
+    Core (const int *colors)
+    {
+        this->CoreColors["BLUE"]  = *colors;
+        this->CoreColors["GREEN"] = *(colors + 1);
+        this->CoreColors["CYAN"]  = *(colors + 2);
+        this->CoreColors["RED"]   = *(colors + 3);
+    }
+
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     template <typename _player, typename _bot>
@@ -66,7 +82,7 @@ void Core::MainGameLogic (_player &player, _bot &bot, _i_data &iData)
             break;
         case 's':
             this->Save(player, bot);
-            this->ColorPrint("=== Game is saved ===", 2);
+            this->ColorPrint("=== Game is saved ===", this->CoreColors["GREEN"]);
             break;
         case 'i':
             this->openInventory(player, iData);
@@ -82,7 +98,7 @@ void Core::MainGameLogic (_player &player, _bot &bot, _i_data &iData)
             break;
         }
     } else {
-        this->ColorPrint("Action is wrong", 4);
+        this->ColorPrint("Action is wrong", this->CoreColors["RED"]);
     }
 }
 
@@ -91,7 +107,10 @@ int Core::examine(_player &player, _bot &bot)
 {
     if (bot.getHp() <= 0)
     {
-        this->ColorPrint("===================================================\n====================You are won====================\n===================================================", 2);
+        this->ColorPrint(
+            "===================================================\n====================You are won====================\n===================================================",
+            this->CoreColors["GREEN"]
+        );
         bot.n_setHp(100);
         bot.setLevel(bot.getLevel() + 1);
         bot.setPossibility_of_hit(bot.getPossibility_of_hit() + (0 + rand() % 3));
@@ -109,7 +128,10 @@ int Core::examine(_player &player, _bot &bot)
 
     if (player.getHp() <= 0)
     {
-        this->ColorPrint("====================================================\n====================You are lose====================\n====================================================", 4);
+        this->ColorPrint(
+            "====================================================\n====================You are lose====================\n====================================================",
+            this->CoreColors["RED"]
+        );
         return 1;
     }
     return -1;
@@ -120,60 +142,60 @@ void Core::caseA(_player &player, _bot &bot, char &playerAction, char &botAction
 {
     if (player.genarateProbability(playerAction) == 111)
     {
-        this->ColorPrint("Player: is shooting", 3);
+        this->ColorPrint("Player: is shooting", this->CoreColors["CYAN"]);
         if (bot.genarateProbability('f') == 100)
         {
             player.setHp(-player.getDamage());
-            this->ColorPrint("Bot: has tend of", 3);
+            this->ColorPrint("Bot: has tend of", this->CoreColors["CYAN"]);
         } else {
             if (botAction == 'd')
             {
-                this->ColorPrint("Bot: took the shield", 3);
+                this->ColorPrint("Bot: took the shield", this->CoreColors["CYAN"]);
                 if (bot.genarateProbability(botAction) == 0)
                 {
                     bot.setHp(-player.getDamage());
-                    this->ColorPrint("Bot: shield does not work", 3);
-                    this->ColorPrint("Player: bang", 3);
+                    this->ColorPrint("Bot: shield does not work", this->CoreColors["CYAN"]);
+                    this->ColorPrint("Player: bang", this->CoreColors["CYAN"]);
                 } else {
-                    this->ColorPrint("Bot: shield worked", 3);
+                    this->ColorPrint("Bot: shield worked", this->CoreColors["CYAN"]);
                 }
             } else {
-                this->ColorPrint("Player: bang", 3);
-                this->ColorPrint("Bot: is shooting", 3);
+                this->ColorPrint("Player: bang", this->CoreColors["CYAN"]);
+                this->ColorPrint("Bot: is shooting", this->CoreColors["CYAN"]);
                 if (bot.genarateProbability(botAction) == 111)
                 {
                     if (player.genarateProbability('f') == 100)
                     {
                         bot.setHp(-bot.getDamage());
-                        this->ColorPrint("Player: has tend of", 3);
+                        this->ColorPrint("Player: has tend of", this->CoreColors["CYAN"]);
                     } else {
                         player.setHp(-bot.getDamage());
                         this->ColorPrint("Bot: bang", 3);
                     }
                 } else {
-                    this->ColorPrint("Bot: tried to shoot", 3);
+                    this->ColorPrint("Bot: tried to shoot", this->CoreColors["CYAN"]);
                 }
             }
         }
     } else {
-        this->ColorPrint("Player: tried to shoot", 3);
+        this->ColorPrint("Player: tried to shoot", this->CoreColors["CYAN"]);
         if (botAction == 'd')
         {
-            this->ColorPrint("Bot: took the shield", 3);
+            this->ColorPrint("Bot: took the shield", this->CoreColors["CYAN"]);
         } else {
             if (bot.genarateProbability(botAction) == 111)
             {
-                this->ColorPrint("Bot: is shooting", 3);
+                this->ColorPrint("Bot: is shooting", this->CoreColors["CYAN"]);
                 if (player.genarateProbability('f') == 100)
                 {
                     bot.setHp(-bot.getDamage());
-                    this->ColorPrint("Player: has tend of", 3);
+                    this->ColorPrint("Player: has tend of", this->CoreColors["CYAN"]);
                 } else {
                     player.setHp(-bot.getDamage());
-                    this->ColorPrint("Bot: bang", 3);
+                    this->ColorPrint("Bot: bang", this->CoreColors["CYAN"]);
                 }
             } else {
-                this->ColorPrint("Bot: tried to shoot", 3);
+                this->ColorPrint("Bot: tried to shoot", this->CoreColors["CYAN"]);
             }
         }
 
@@ -183,20 +205,20 @@ void Core::caseA(_player &player, _bot &bot, char &playerAction, char &botAction
 template <typename _player, typename _bot>
 void Core::caseD(_player &player, _bot &bot, char &playerAction, char &botAction)
 {
-    this->ColorPrint("Player: took the shield", 3);
+    this->ColorPrint("Player: took the shield", this->CoreColors["CYAN"]);
     if (botAction == 'a')
     {
         if (bot.genarateProbability(botAction) == 111)
         {
-            this->ColorPrint("Bot: is shooting", 3);
+            this->ColorPrint("Bot: is shooting", this->CoreColors["CYAN"]);
             if (player.genarateProbability('f') == 100)
             {
                 bot.setHp(-bot.getDamage());
-                this->ColorPrint("Player: has tend of", 3);
+                this->ColorPrint("Player: has tend of", this->CoreColors["CYAN"]);
             } else {
                 if (player.genarateProbability(botAction) == 101)
                 {
-                    this->ColorPrint("Player: shield worked", 3);
+                    this->ColorPrint("Player: shield worked", this->CoreColors["CYAN"]);
                 } else {
                     this->ColorPrint("Player: shield does not work", 3);
                     player.setHp(-bot.getDamage());
@@ -204,17 +226,20 @@ void Core::caseD(_player &player, _bot &bot, char &playerAction, char &botAction
                 }
             }
         } else {
-            this->ColorPrint("Bot: try to shoot", 3);
+            this->ColorPrint("Bot: try to shoot", this->CoreColors["CYAN"]);
         }
     } else {
-        this->ColorPrint("Bot: took the shield", 3);
+        this->ColorPrint("Bot: took the shield", this->CoreColors["CYAN"]);
     }
 }
 
 template <typename _player, typename _i_data>
 void Core::openInventory (_player &player, _i_data &iData)
 {
-    this->ColorPrint("=============================\n==========Inventory==========\n=============================\n", 2);
+    this->ColorPrint(
+        "=============================\n==========Inventory==========\n=============================\n",
+        this->CoreColors["GREEN"]
+    );
     SetConsoleTextAttribute(this->hConsole, 2);
 
     std::cout.width(20);
@@ -270,7 +295,7 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
         case 0:
             if (value <= 0)
             {
-                this->ColorPrint("Warning: HP is less than 0", 4);
+                this->ColorPrint("Warning: HP is less than 0", this->CoreColors["RED"]);
                 is_error__ = 1;
                 goto error;
             } else {
@@ -330,12 +355,12 @@ void Core::ParseAndSetAttr(_player &player, _bot &bot, std::string &data, std::s
     error:
     if (is_error__ != 0)
     {
-        this->ColorPrint("New game", 2);
+        this->ColorPrint("New game", this->CoreColors["GREEN"]);
         player.Reset();
         bot.Reset();
     }
 
-    this->ColorPrint("Data read successfully...", 1);
+    this->ColorPrint("Data read successfully...", this->CoreColors["BLUE"]);
 } // конец магии парсера
 
 template <typename _player, typename _bot>
@@ -412,11 +437,11 @@ void Core::ParseList(_player &player, std::string &data)
 template <typename _player, typename _bot>
 void Core::returnInfo (_player player, _bot bot)
 {
-    this->ColorPrint("===Player===", 2);
-    this->ColorPrint("\tXP: " + std::to_string(player.getHp()), 2);
-    this->ColorPrint("\tDamage: " + std::to_string(player.getDamage()), 2);
-    this->ColorPrint("===Bot===", 2);
-    this->ColorPrint("\tXP: " + std::to_string(bot.getHp()), 2);
-    this->ColorPrint("\tDamage: " + std::to_string(bot.getDamage()), 2);
-    this->ColorPrint("\tLevel: " + std::to_string(bot.getLevel()), 2);
+    this->ColorPrint("===Player===", this->CoreColors["GREEN"]);
+    this->ColorPrint("\tXP: " + std::to_string(player.getHp()), this->CoreColors["GREEN"]);
+    this->ColorPrint("\tDamage: " + std::to_string(player.getDamage()), this->CoreColors["GREEN"]);
+    this->ColorPrint("===Bot===", this->CoreColors["GREEN"]);
+    this->ColorPrint("\tXP: " + std::to_string(bot.getHp()), this->CoreColors["GREEN"]);
+    this->ColorPrint("\tDamage: " + std::to_string(bot.getDamage()), this->CoreColors["GREEN"]);
+    this->ColorPrint("\tLevel: " + std::to_string(bot.getLevel()), this->CoreColors["GREEN"]);
 }

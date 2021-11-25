@@ -40,25 +40,22 @@ void Player::setLeft()
 
 
     if ((num == 0) || (num == 1) || (num == 2) || (num == 3) || (num == 4))
-    {
+    { 
         if (*(this->leftArm_link + num) != 10)
         {
-            *(this->curLeftArm_link) = this->iData.THINGS_FOR_ARMS_ATTACK[num];
-            this->setDamage(this->getDamage() + *(this->curLeftArm_link));
+            *(this->curLeftArm_link) = this->leftArm_link[num];
+            this->setDamage(this->getDamage() + this->iData.THINGS_FOR_ARMS_ATTACK[this->leftArm_link[num]]);
+            this->leftArm_link[num] = 10;
         } else {
             std::cout << "Inventory is empty..." << std::endl;
         }
-    } else if (num == 'q') // это было для дебагинга, тут пока бред. Позже исправлю
-    {
-        std::cout << "Wrong input..." << std::endl;
     } else {
         std::cout << "Wrong input..." << std::endl;
-    } // ---------------------------------------------------------------------------
+    }
 }
 
 void Player::setRight()
 {
-    
     int num;
 
     std::getchar();
@@ -68,8 +65,9 @@ void Player::setRight()
     {
         if (*(this->rightArm_link + num) != 10)
         {
-            *(this->curRightArm_link) = this->iData.THINGS_FOR_ARMS_ATTACK[num];
-            this->setDamage(this->getDamage() + *(this->curRightArm_link));
+            *(this->curRightArm_link) = this->rightArm_link [num];
+            this->setDamage(this->getDamage() + this->iData.THINGS_FOR_ARMS_ATTACK[this->rightArm_link[num]]);
+            this->rightArm_link[num] = 10;
         } else {
             std::cout << "Inventory is empty..." << std::endl;
         }
